@@ -28,7 +28,7 @@ public partial class MainView : UserControl
     private ElaboratoreCarteBriscola e;
     private Stream asset;
     private Opzioni o;
-    private static CartaHelperBriscola cartaHelper;
+    private static org.altervista.numerone.framework.briscola.CartaHelper cartaHelper;
     public static MainView Instance=null;
     public MainView()
     {
@@ -45,7 +45,7 @@ public partial class MainView : UserControl
         m = new Mazzo(e);
 
         m.SetNome(o.nomeMazzo);
-        Carta.Inizializza("", m, 40, cartaHelper = new CartaHelperBriscola(ElaboratoreCarteBriscola.GetCartaBriscola()), d["bastoni"] as string, d["coppe"] as string, d["denari"] as string, d["spade"] as string, d["Fiori"] as string, d["Quadri"] as string, d["Cuori"] as string, d["Picche"] as string, "TrumpSuitGameKnocked");
+        Carta.Inizializza("", m, 40, cartaHelper = new org.altervista.numerone.framework.briscola.CartaHelper(ElaboratoreCarteBriscola.GetCartaBriscola()), d["bastoni"] as string, d["coppe"] as string, d["denari"] as string, d["spade"] as string, d["Fiori"] as string, d["Quadri"] as string, d["Cuori"] as string, d["Picche"] as string, "TrumpSuitGameKnocked");
 
         asset = AssetLoader.Open(new Uri($"avares://TrumpSuitGameKnocked/Assets/retro_carte_pc.png"));
         cartaCpu.Source = new Bitmap(asset);
@@ -97,7 +97,6 @@ public partial class MainView : UserControl
         Briscola.Source = briscola.GetImmagine();
         btnGiocata.Content = $"{d["giocataVista"]}";
         lbLivello.Content = $"{d["Livello"]}";
-        lblstatus.Content = "";
     }
     private Opzioni CaricaOpzioni()
     {
@@ -146,7 +145,6 @@ public partial class MainView : UserControl
 
     private void Gioca_Click(object sender, RoutedEventArgs e)
     {
-        lblstatus.Content = "";
         c = primo.GetCartaGiocata();
         c1 = secondo.GetCartaGiocata();
         if ((c.CompareTo(c1) > 0 && c.StessoSeme(c1)) || (c1.StessoSeme(briscola) && !c.StessoSeme(briscola)))
@@ -163,10 +161,16 @@ public partial class MainView : UserControl
         {
             NelMazzoRimangono.Content = $"{d["NelMazzoRimangono"]} {m.GetNumeroCarte()} {d["carte"]}";
             CartaBriscola.Content = $"{d["IlSemeDiBriscolaE"]}: {briscola.GetSemeStr()}";
-            if (Briscola.IsVisible && m.GetNumeroCarte() == 0)
+            if (Briscola.IsVisible)
             {
-                NelMazzoRimangono.IsVisible = false;
-                Briscola.IsVisible = false;
+                switch (m.GetNumeroCarte())
+                {
+                    case 2: MainWindow.MakeNotification("Mazzo finito", "Il mazzo è finito"); break;
+                    case 0:
+                        NelMazzoRimangono.IsVisible = false;
+                        Briscola.IsVisible = false;
+                        break;
+                }
             }
             Utente0.Source = g.GetImmagine(0);
             if (cpu.GetNumeroCarte() > 1)
@@ -190,6 +194,17 @@ public partial class MainView : UserControl
             if (primo == cpu)
             {
                 i1 = GiocaCpu();
+                if (cpu.GetCartaGiocata().StessoSeme(briscola))
+                {
+                    MainWindow.MakeNotification("La cpu ha giocato briscola", $"La cpu ha giocato il {cpu.GetCartaGiocata().GetValore() + 1} di briscola");
+
+                }
+                else if (cpu.GetCartaGiocata().GetPunteggio() > 0)
+                {
+
+                    MainWindow.MakeNotification("La cpu ha giocato briscola", $"La cpu ha giocato il {cpu.GetCartaGiocata().GetValore() + 1} di {cpu.GetCartaGiocata().GetSemeStr()}");
+
+                }
             }
         }
         else
@@ -281,7 +296,7 @@ public partial class MainView : UserControl
             cartaBriscola = false;
         e = new ElaboratoreCarteBriscola(cartaBriscola);
         m = new Mazzo(e);
-        Carta.SetHelper(cartaHelper = new CartaHelperBriscola(ElaboratoreCarteBriscola.GetCartaBriscola()));
+        Carta.SetHelper(cartaHelper = new org.altervista.numerone.framework.briscola.CartaHelper(ElaboratoreCarteBriscola.GetCartaBriscola()));
         m.SetNome(o.nomeMazzo);
         briscola = Carta.GetCarta(ElaboratoreCarteBriscola.GetCartaBriscola());
         g = new Giocatore(new GiocatoreHelperUtente(), g.GetNome(), 3);
@@ -319,7 +334,6 @@ public partial class MainView : UserControl
         NelMazzoRimangono.Content = $"{d["NelMazzoRimangono"]} {m.GetNumeroCarte()} {d["carte"]}";
         NelMazzoRimangono.IsVisible = true;
         CartaBriscola.Content = $"{d["IlSemeDiBriscolaE"]}: {briscola.GetSemeStr()}";
-        lblstatus.Content = "";
         CartaBriscola.IsVisible = true;
         Briscola.Source = briscola.GetImmagine();
         Briscola.IsVisible = true;
@@ -397,7 +411,7 @@ public partial class MainView : UserControl
         }
         catch (Exception ex)
         {
-            lblstatus.Content = d["MossaNonConsentitaTesto"] as string;
+            MainWindow.MakeNotification("Mossa non consentita", d["MossaNonConsentitaTesto"] as string);
             return;
         }
         if (secondo == cpu)

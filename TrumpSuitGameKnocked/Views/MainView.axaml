@@ -291,7 +291,6 @@
 			<Button x:Name="AppInformazioni" Classes="main" Grid.Row="5" Grid.Column="1" Click="OnInfo_Click">Informazioni</Button>
 			<Button x:Name="AppOpzioni" Classes="main" Grid.Row="5" Grid.Column="0" Click="OnOpzioni_Click">Opzioni</Button>
 			<Button x:Name="btnGiocata"  Classes="main" Grid.Row="5" Grid.Column="2" IsVisible="false" Click="Gioca_Click" />
-			<Label x:Name="lblstatus" Classes="main" Grid.Row="5" Grid.Column="4">Stato</Label>
 		</Grid>
 		<Grid x:Name="Info" IsVisible="False">
 			<Grid.RowDefinitions>
@@ -330,10 +329,10 @@
 			<TextBox x:Name="txtNomeUtente" Grid.Row="0" Grid.Column="1" />
 			<Label Classes="main" x:Name="opNomeCpu" Grid.Row="1" Grid.Column="0" />
 			<TextBox x:Name="txtCpu" Grid.Row="1" Grid.Column="1" />
-			<CheckBox x:Name="cbCartaBriscola" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="True" />
-			<Label Classes="main" x:Name="lbCartaBriscola" Grid.Row="3" Grid.Column="1"/>
-			<CheckBox x:Name="cbAvvisaTallone" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="True" />
-			<Label Classes="main" x:Name="lbAvvisaTallone" Grid.Row="4" Grid.Column="1"/>
+			<ToggleSwitch x:Name="cbCartaBriscola" Grid.Row="3" Grid.Column="1" />
+			<Label Classes="main" x:Name="lbCartaBriscola" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+			<ToggleSwitch x:Name="cbAvvisaTallone" Grid.Row="4" Grid.Column="1" />
+			<Label Classes="main" x:Name="lbAvvisaTallone" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
 			<Label  Classes="main" x:Name="lbLivello" Grid.Row="6" Grid.Column="0" />
 			<ComboBox x:Name="cbLivello" Grid.Row="6" Grid.Column="1">
 				<ComboBoxItem>1</ComboBoxItem>
