@@ -1,4 +1,4 @@
-## TrumpSuitGanemeKnocked in avalonia
+## TrumpSuitGameKnocked in avalonia
 Questo progetto doveva essere la briscola con risposta del seme in avalonia per android, perché in avalonia i timer vengono blacklistati e quindi è necessaria la conferma della visione della giocata, però a causa di un bug non è stato possibile terminarlo.
 Adesso che il bug è stato risolto, il progetto è stato convertito in progetto desktop e ve lo lascio compilare perché è legacy.
 
