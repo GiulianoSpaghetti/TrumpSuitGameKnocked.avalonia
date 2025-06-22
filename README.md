@@ -9,3 +9,19 @@ dotnet --list-sdks
 mostra numeri diversi dopo l'aggiornamento di visual studio.
 
 Happy Hacking :)
+
+## Provarlo online da browser
+
+E' presente una versione ridotta senza avvisi né possibilità di giocare al meglio delle due partite, né livelli, né cambi di carte giocabile nel browser.
+
+http://numeronesoft.ddns.net:8080/apps/TrumpSuitGameKnocked.avalonia
+
+
+## Bug Conosciuti
+
+Dal momento che nell'ultimo avalonia le immagini non possono essere cliccate ma i bottoni si ed i bottoni possono fungere da contenitori per le immagini, è presente un bug che dice che se si è nelle ultime due mani e si clicca un bottone vuoto, la giocata viene gestita.
+Essendo una demo gratuita non rientra nelle mie proprità riparlarlo, per cui non cliccate sui bottoni senza immagini.
+
+## Donazioni
+
+https://numerone.altervista.org/donazioni.php
